@@ -61,3 +61,5 @@ Route::post('/tokens/create', function (Request $request) {
 ```
     php artisan make:controller AuthController
 ```
+
+https://www.twilio.com/blog/build-restful-api-php-laravel-sanctum

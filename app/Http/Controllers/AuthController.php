@@ -48,4 +48,9 @@ class AuthController
             'token_type'   => 'Bearer',
         ]);
     }
+
+    public function me(Request $request)
+    {
+        return $request->user();
+    }
 }
