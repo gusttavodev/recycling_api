@@ -43,15 +43,15 @@ class CategoryController extends Controller
             'enable' => 'sometimes|boolean|max:255',
         ]);
 
-        $category = $user->categories()->find($id)->update($validated);
+        $category = $user->categories()->findOrFail($id)->update($validated);
 
-        return response()->json($category);
+        return response()->json($user->categories()->findOrFail($id));
     }
     public function destroy($id)
     {
         $user = Auth::user();
 
-        $category = $user->categories()->find($id)->delete();
+        $category = $user->categories()->findOrFail($id)->delete();
 
         return response()->json($category);
     }
