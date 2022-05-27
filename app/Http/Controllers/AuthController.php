@@ -12,9 +12,10 @@ class AuthController
     public function register(Request $request)
     {
         $validatedData = $request->validate([
-            'name'     => 'required|string|max:255',
-            'email'    => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:8',
+            'name'                  => 'required|string|max:255',
+            'email'                 => 'required|string|email|max:255|unique:users',
+            'password'              => 'confirmed|required|string|min:8',
+            'password_confirmation' => 'required|string|min:8'
         ]);
 
         $user = User::create([
@@ -57,5 +58,15 @@ class AuthController
     public function me(Request $request)
     {
         return $request->user();
+    }
+
+    public function logout(Request $request)
+    {
+        $request->user()->tokens()->delete();
+        // $request->user()->currentAccessToken()->delete();
+
+        return response()->json([
+            'message' => "Logout with success",
+        ]);
     }
 }
