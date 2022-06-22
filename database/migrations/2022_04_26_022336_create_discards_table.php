@@ -16,8 +16,9 @@ return new class extends Migration {
             $table->id();
 
             $table->integer('quantity')->default(1);
-            $table->foreignId('date')->useCurrent();
+            $table->datetime('date')->useCurrent();
             $table->foreignId('product_id')->references('id')->on('products')->onDelete('cascade');
+            $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade');
 
             $table->timestamps();
         });

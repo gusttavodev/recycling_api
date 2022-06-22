@@ -21,7 +21,7 @@ class ProductController extends Controller
             'name'         => 'required|unique:products|max:255', #TODO UNIQUE PER USER
             'description'  => 'required|max:255',
             'enable'       => 'required|boolean|max:255',
-            'categories.*' => 'sometimes|array|unique:categories'
+            'categories.*' => 'sometimes'
         ]);
 
         $product = $user->products()->create($validated);
@@ -34,7 +34,7 @@ class ProductController extends Controller
     {
         $user = Auth::user();
 
-        return response()->json($user->products()->find($id));
+        return response()->json($user->products()->with('categories')->find($id));
     }
     public function update(Request $request, $id)
     {
@@ -44,11 +44,11 @@ class ProductController extends Controller
             'name'         => 'sometimes|unique:categories,id,' . $id . '|max:255', #TODO UNIQUE PER USER
             'description'  => 'sometimes|max:255',
             'enable'       => 'sometimes|boolean|max:255',
-            'categories.*' => 'sometimes|array|unique:categories'
+            'categories.*' => 'sometimes'
         ]);
 
-        $user->products()->findOrFail($id)->update($validated);
-
+        $product = $user->products()->findOrFail($id);
+        $product->update($validated);
         $product->categories()->sync($validated['categories'] ?? null);
 
         return response()->json($user->products()->with('categories')->findOrFail($id));

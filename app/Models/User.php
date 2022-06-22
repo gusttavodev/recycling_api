@@ -36,4 +36,9 @@ class User extends Authenticatable
     {
         return $this->HasMany(Product::class);
     }
+
+    public function discard(): HasMany
+    {
+        return $this->HasMany(Discard::class);
+    }
 }
