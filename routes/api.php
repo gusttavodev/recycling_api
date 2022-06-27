@@ -1,10 +1,11 @@
 <?php
 
-use App\Http\Controllers\AuthController;
-use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\ProductController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\InformationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,3 +34,10 @@ Route::resource('category', CategoryController::class)->except([
 Route::resource('product', ProductController::class)->except([
     'create', 'edit'
 ])->middleware('auth:sanctum');
+
+
+Route::get('/information/product-discard-month',
+    [InformationController::class, 'productDiscardMonth']
+)
+->middleware('auth:sanctum')
+->name('information.product-discard-month');
